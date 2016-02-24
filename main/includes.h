@@ -1,4 +1,4 @@
-//Includes.h
+//Includes
 /********************     Libraries      *******************/
 #include <Servo.h>
 #include <Wire.h>
