@@ -3,23 +3,23 @@
 #include <Servo.h>
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"  //color sensor; import from "Manage Libraries…"
-//#include "Adafruit_L3GD20.h"    //gyro sensor; may also try L3G by Pololu
+//#include "Adafruit_L3GD20.h"  //gyro sensor; may also try L3G by Pololu
 //Adafruit library outputs as scaled floats
 //Use Pololu library which outputs unscaled int16_t instead:
 #include "L3G.h"                //gyro sensor; import from L3G folder at https://github.com/pololu/l3g-arduino
-#include "FastLED.h"            //for rgb2hsv_approximate(); import from "Manage Libraries…"
-#include "NewPing.h"            //for ultrasonic range finders; import from
-                                //https://bitbucket.org/teckel12/arduino-new-ping/downloads/NewPing_v1.7.zip
-#include "PID_v1.h"             //import from https://github.com/br3ttb/Arduino-PID-Library/
-#include "Encoder.h"            //for quadrature encoders on motors: import from "Manage Libraries…"
-#include "Sabertooth.h"         //Dimension Engineering library; import from Sabertooth folder of
-                                //http://www.dimensionengineering.com/software/SabertoothArduinoLibraries.zip
-                                 
+#include "FastLED.h"			//for rgb2hsv_approximate(); import from "Manage Libraries…"
+#include "NewPing.h"			//for ultrasonic range finders; import from
+								//https://bitbucket.org/teckel12/arduino-new-ping/downloads/NewPing_v1.7.zip
+#include "PID_v1.h				//import from https://github.com/br3ttb/Arduino-PID-Library/
+#include "Encoder.h"			//for quadrature encoders on motors: import from "Manage Libraries…"
+#include "Sabertooth.h			//Dimension Engineering library; import from Sabertooth folder of
+								//http://www.dimensionengineering.com/software/SabertoothArduinoLibraries.zip
+
 //Do not use external interrupt pins with EnableInterrupt:
 //already used by encoders (conflicting with Encoder.h's interrupt handlers)
 //cf. https://github.com/GreyGnome/EnableInterrupt/wiki/Usage#conflicting-isrs-with-other-libraries
 #define EI_NOTEXTERNAL
-#include "EnableInterrupt.h"    //for STOP button: import from "Manage Libraries…"
+#include "EnableInterrupt.h"	//for STOP button: import from "Manage Libraries…"
 /*********************     Pin assignments for Arduino Mega     ************************/
 //0 reserved for Serial RX --> USB TX
 //1 reserved for Serial TX --> USB RX
@@ -30,13 +30,13 @@
 #define SRF_F_TRIGGER   7
 #define SRF_FL_TRIGGER  8
 #define SRF_FL_ECHO     8
-#define GRABBER_PIN     9    //servo 1 on Adafruit motor shield
-#define ARM_PIN         10    //servo 2 on Adafruit motor shield
+#define GRABBER_PIN     9		//servo 1 on Adafruit motor shield
+#define ARM_PIN         10		//servo 2 on Adafruit motor shield
 #define SRF_L_ECHO      11
 #define SRF_L_TRIGGER   11
 #define SRF_R_ECHO      12
 #define SRF_R_TRIGGER   12
-#define COLOR_LED_PIN   13    //to avoid blinding people; same as onboard LED
+#define COLOR_LED_PIN   13		//to avoid blinding people; same as onboard LED
 //14-15 open
 //16 reserved for Serial2 TX --> Sabertooth S1
 //17 reserved for Serial2 RX
@@ -44,20 +44,20 @@
 #define MOTOR_R_ENCODER_B   19
 //20 reserved for SDA
 //21 reserved for SCL
-#define ST_SHUTOFF_PIN  22    //active low Sabertooth shutoff (S2)
+#define ST_SHUTOFF_PIN  22		//active low Sabertooth shutoff (S2)
 //23-39 open
-#define GO_PIN          40    //button to start/resume robot
+#define GO_PIN          40		//button to start/resume robot
 //41-43 open
 #define SRF_FR_TRIGGER  44
 #define SRF_FR_ECHO     45
 //46-51 open
-#define STOP_PIN        52    //button to stop robot
+#define STOP_PIN        52		//button to stop robot
 //53 open 
 //pins 54 to 69 correspond to pins A0 to A15 on Arduino Mega
-#define PHOTOGATE_PIN   A3    //pin for photogate (analog)
+#define PHOTOGATE_PIN   A3		//pin for photogate (analog)
 //A4 shorted to SDA by Adafruit motor shield
 //A5 shorted to SCL by Adafruit motor shield
-#define IR_FRONT_PIN    A8    //long range sensor: Sharp GP2Y0A02YK0F
+#define IR_FRONT_PIN    A8		//long range sensor: Sharp GP2Y0A02YK0F
 
 /************************     Servos      ************************/
 //servo angles from testing
@@ -65,7 +65,7 @@
 #define ARM_DOWN        95
 #define GRABBER_OPEN    140
 #define GRABBER_CLOSE   72
-#define GRABBER_MIN     50 //do not use when holding a victim
+#define GRABBER_MIN     50		//do not use when holding a victim
  
 /*************************   Photogate     *********************/
 //15-bit thresholds with hysteresis
