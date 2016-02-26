@@ -1,4 +1,4 @@
-//Macros
+//Robot Macros
 //blink color sensor LED once
 void ledBlink(unsigned long delay_ms) {
   digitalWrite(COLOR_LED_PIN, HIGH);
