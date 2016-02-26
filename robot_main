@@ -1,0 +1,56 @@
+//Added to existing main section.
+//This is what my additions should look like.
+//Need to test them alone before putting into the main program.
+
+void robot_game() {
+	Serial.println("Press GO to continue");
+	while(digitalRead(GO_PIN) != LOW);
+	
+  	leaveStartingArea();
+  	L1_to_L2();
+  	
+	victim_color E_city = get_E_city();
+	if(E_city == yellow){
+		dropoff_E_city_Y();
+		depart_from_Y_1();
+	}
+	else{ //red
+		L2_to_L1();
+		dropoff_R(); // will be part of usual dropoff red victim case
+		L1_to_L2();
+		L2_E_to_L2_S_B();
+			//should now be facing wall between lane 1 and 2 by W opening to lane 3 
+	}
+	//victim_color W_city = get_W_city();
+	get_W_city();
+	if(E_city == yellow){//i.e. W_city == red
+		L2_W_to_L2_S();
+		L2_to_L1();
+		dropoff_R();
+		L1_to_L2();
+		L2_E_to_L2_N();
+	}
+	else{
+		dropoff_Y();
+		depart_from_Y_2();
+	}
+	//get to east L2-L3 opening
+	//depart_from_Y_2();
+	//L2_E_to_L2_N();
+	get_NE_victim();
+
+/*
+	get_NW_Victim();
+	if(NW_city == yellow){	//i.e. NE_city == red
+		dropoff_NW_Y;
+		home_Y();	//Finds opening and faces Lane 1
+		L2_to_L1();	//Moves from Lane 2 to Lane 1
+		L1_to_L0();	//Turns and moves into starting location to end the round
+	}
+	else{
+		dropoff_NW_R;
+		home_R();	//Moves into starting location to end the round
+	}
+*/
+
+} //end robot_game()
