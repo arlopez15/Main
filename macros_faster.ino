@@ -1,19 +1,3 @@
-Skip to content
-This repository  
-Search
-Pull requests
-Issues
-Gist
- @arlopez15
- Unwatch 4
-  Star 0
-  Fork 0 chrstphrchvz/khakis
- Code  Issues 0  Pull requests 0  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathkhakis/main/robot_macros.ino
-b459e6d  a day ago
-@jvillanueva111 jvillanueva111 lets make it go faster
-2 contributors @chrstphrchvz @jvillanueva111
-RawBlameHistory     909 lines (774 sloc)  24.8 KB
 //blink color sensor LED once
 void ledBlink(unsigned long delay_ms) {
   digitalWrite(COLOR_LED_PIN, HIGH);
@@ -921,5 +905,3 @@ void detect_WNW_victim() {
 	//sweep to detect WNW victim
 	while(
 }*/
-Status API Training Shop Blog About Pricing
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help
